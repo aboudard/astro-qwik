@@ -1,0 +1,98 @@
+---
+title: Installation Guide
+description: Install dependencies and create the project.
+sidebar:
+  order: 2
+---
+
+import { TabItem, Tabs } from '@astrojs/starlight/components';
+
+## Install dependencies and create the project
+
+You have, as we write this tutorial, two ways to create a new project with Qwik :
+
+- Using npm create command
+- Using Nx and the qwik-nx plugin
+
+## Using npm create command
+
+The easiest way to create a new project is to use the npm create command. This command will create a new project with the latest version of Qwik and all the dependencies needed to run it.
+
+```bash
+npm create qwik@latest
+```
+
+You will be prompted with options to choose from :
+
+![Example banner](/img/npm-create-qwik.png)
+
+We might want to create an `Empty App` for this tutorial.
+
+## Using Nx and the qwik-nx plugin
+
+If you are using Nx, you can use the qwik-nx plugin to create a new project.
+This plugin will create a new Nx workspace with the latest version of Qwik and all the dependencies needed to run it.
+You can find the project here : https://github.com/qwikifiers/qwik-nx
+
+```bash
+npx create-nx-workspace@latest my-workspace --preset=qwik-nx
+```
+
+## Run the application
+
+### Development server
+Depending on your install, you have the following options
+
+<Tabs>
+  <TabItem label="With npm create">
+    ```bash
+    npm start
+    yarn start
+    pnpm start
+    ```
+  </TabItem>
+  <TabItem label="With Qwik Nx">
+    The commands are handled by Nx, and can be found in the `apps/my-app/project.json` file.
+
+    ```bash
+    nx run my-app:serve
+    ```
+
+    With the correct plugin installed in your IDE, you can run the commands in GUI.
+    - Plugin for VSCode : https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console
+    - Plugin for Intellij IDEA : https://plugins.jetbrains.com/plugin/15101-nx-console-idea
+
+    ![Example banner](/img/run-qwik-nx-start.png)
+  </TabItem>
+</Tabs>
+
+### Build the application for production
+<Tabs>
+<TabItem label="With npm create">
+
+```bash
+npm preview
+yarn preview
+pnpm preview
+```
+
+</TabItem>
+<TabItem label="With Qwik Nx">
+
+```bash
+  nx run my-app:preview
+```
+
+</TabItem>
+</Tabs>
+
+
+### The application structure
+
+Depending on the choice you made, you will have a different structure for your application.
+We will start from the empty application and add our components.
+
+![File structure](/img/qwik-empty-file-structure.png)
+
+We choose a basic application with the QwikCity library pre installed.
+We will discuss this topic later.

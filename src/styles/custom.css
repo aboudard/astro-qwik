@@ -1,0 +1,17 @@
+:root {
+    --sl-text-xl: 1.25rem !important;
+    --sl-text-2xl: 1.35rem !important;
+    --sl-text-3xl: 1.5rem !important;
+    --sl-text-4xl: 1.85rem !important;
+    --sl-text-5xl: 2rem !important;
+    --sl-text-6xl: 2.3rem !important;
+    --sl-color-text-accent: #ac7ef4 !important;
+    --sl-text-h1: var(--sl-text-4xl) !important;
+    --sl-text-h2: var(--sl-text-3xl) !important;
+    --sl-text-h3: var(--sl-text-2xl) !important;
+    --sl-text-h4: var(--sl-text-xl) !important;
+    --sl-nav-pad-x: 1rem !important;
+    --sl-nav-pad-y: 0.5rem !important;
+    --sl-content-pad-x: 0.7rem !important;
+    --sl-content-pad-y: 0.7rem !important;
+}

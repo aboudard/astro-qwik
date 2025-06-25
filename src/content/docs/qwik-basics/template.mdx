@@ -1,0 +1,150 @@
+---
+title: Template of the Component
+description: Display data in Qwik and bind it to the template.
+sidebar:
+  order: 2
+---
+
+## Display simple data
+
+Just like in any other Javascript framework, we want to display some data from the component with the template.
+Let's display a simple `title` property from the component. We use the curly braces from the [embedding syntax from jsx](https://www.typescriptlang.org/docs/handbook/jsx.html#embedding-expressions).
+
+
+```tsx
+// src/components/todo/todo.tsx 
+export const Todo = component$(() => {
+    const title = 'Learn Qwik';
+    return (
+        <>Todo: {title}</>
+    );
+});
+```
+
+The attributes of an element can be binded with the same syntax.
+
+```tsx
+// src/components/todo/todo.tsx
+export const Todo = component$(() => {
+    const title = 'Learn Qwik';
+    const isDone = true;
+    return (
+        <div>
+            <strong>{title}</strong>
+            <input type="checkbox" checked={isDone} />
+        </div>
+    );
+});
+```
+
+Classes applied to an element can be declared either with an array or an object.
+    
+```tsx
+// src/components/todo/todo.tsx
+export const Todo = component$(() => {
+    const title = 'Learn Qwik';
+    const isDone = true;
+    const classes = ['todo', 'done'];
+    return (
+        <div class={classes}>
+            <h1>{title}</h1>
+            <input type="checkbox" checked={isDone} />
+        </div>
+    );
+});
+```
+## Bind data to the template
+
+You could notice that the boolean value `isDone` does check the checkbox. 
+But what if we want to change the value of `isDone` when the checkbox is clicked?
+If we write this down : 
+
+```tsx
+<strong>{title} : {JSON.stringify(isDone)}</strong><br />
+```
+
+We can see that the value doesn't change, there is no interaction.
+
+To make the checkbox interactive, we need to bind the value of the checkbox to the `isDone` property.
+This is an automatic two-way binding, so when the checkbox is clicked, the value of `isDone` will change.
+
+```tsx
+// src/components/todo/todo.tsx
+export const Todo = component$(() => {
+    const title = 'Learn Qwik';
+    const isDone = useSignal(true);
+    return (
+        <div>
+            <strong>{title} : {JSON.stringify(isDone.value)}</strong><br />
+            <input type="checkbox" bind:checked={isDone} />
+        </div>
+    );
+});
+```
+Note that the `isDone` property is a [Signal](https://qwik.dev/docs/components/state/#usesignal), which can be accessed with `isDone.value`.
+But when we bind this value to the checkbox, we don't need to access the value, we just need to bind the Signal itself.
+
+## Use a method in the template
+
+This auto binding is handy, but what if we want to do something more complex when the checkbox is clicked?
+We can use a method in the template to handle the event.
+
+```tsx
+// src/components/todo/todo.tsx
+export const Todo = component$(() => {
+    const title = 'Learn Qwik';
+    const isDone = useSignal(true);
+    return (
+        <div>
+            <strong>{title} : {JSON.stringify(isDone.value)}</strong><br />
+            <input type="checkbox" 
+            checked={isDone.value} 
+            onClick$={() => isDone.value = !isDone.value} />
+        </div>
+    );
+});
+```
+Note that this method is declared in the template, but it could be declared in the component as well.
+
+
+## Conditional rendering
+
+We have a boolean variable in the component, now we can use it to conditionally render some elements.
+
+```tsx
+// src/components/todo/todo.tsx
+export const Todo = component$(() => {
+    const title = 'Learn Qwik';
+    const isDone = true;
+    return (
+        <div>
+            <strong>{title} : {JSON.stringify(isDone.value)}</strong><br />
+            <input type="checkbox" bind:checked={isDone} />
+            <p>
+            {isDone.value ? <span id="done">Done</span> : <span id="notdone">Not Done</span>}
+            </p>
+        </div>
+    );
+});
+```
+This is a basic use of TSX, of course we could compute the id of the span to simplify the template.
+In order to do that simply, we can derive a signal from the `isDone` signal.
+This is done with the [useComputed$](https://qwik.dev/docs/components/state/#usecomputed) method.
+
+```tsx
+// src/components/todo/todo.tsx
+export const Todo = component$(() => {
+    const title = 'Learn Qwik';
+    const isDone = useSignal(true);
+    const doneId = useComputed$(() => isDone.value ? 'done' : 'notdone');
+    return (
+        <div>
+            <strong>{title} : {JSON.stringify(isDone.value)}</strong><br />
+            <input type="checkbox" bind:checked={isDone} />
+            <p>
+            <span id={doneId.value}> {doneId.value === 'done' ? 'Done' : 'Not Done'}</span>
+            </p>
+        </div>
+    );
+});
+```

@@ -26,9 +26,9 @@ export default defineConfig({
           },
         },
         {
-          label: "Reference",
+          label: "Qwik basics",
           autogenerate: {
-            directory: "reference",
+            directory: "qwik-basics",
           },
         },
       ],
